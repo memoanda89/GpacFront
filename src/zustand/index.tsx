@@ -3,9 +3,11 @@ import { MyState, FiltersMap, viewport,GuardaGpac, zipState } from "./types";
 
 
 export default create((setState: SetState<MyState>, getState: GetState<MyState>): MyState => {
-
-  const server = "http://localhost:8081/api/";
-  const serverCatalog = "http://localhost:8081/api/getCatalogo/";
+  
+  // const server = "http://localhost:8081/api/";
+  // const serverCatalog = "http://localhost:8081/api/getCatalogo/";
+  const server = "http://lavameappservicios.us-west-2.elasticbeanstalk.com/api/";
+  const serverCatalog = "http://lavameappservicios.us-west-2.elasticbeanstalk.com/api/getCatalogo/";
 
   const zipCodeApi = "https://public.opendatasoft.com/api/records/1.0/search/?dataset=us-zip-code-latitude-and-longitude&q=&rows=300&facet=state";
 
