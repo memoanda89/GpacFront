@@ -9,7 +9,7 @@ import CustomSelectOnChange from "../CustomSelectOnChange";
 import { searchMap } from "../../zustand/types";
 import logo from './../../assets/images/logoGpac.png' 
  
-import swal from 'sweetalert2';
+
  
 const [objStore] = useMyStore;
 const useStyles = makeStyles((theme: Theme) =>
@@ -30,7 +30,13 @@ type Inputs = {
     exampleRequired: string,
   };
   const zipCode =[];
-const AddModal :  React.FC<{}> = () => {
+ 
+
+  export default React.memo(function AddModal(this: any, {
+    close
+  }: any){
+
+
     const classes = useStyles();
     const Search=objStore(state=>state.searchMap);
    
@@ -113,6 +119,7 @@ const AddModal :  React.FC<{}> = () => {
       );
     
     
+     
     
       const renderActivity = (): undefined | JSX.Element | string => {
         if (arrayActivity && arrayActivity.contenido.length) {
@@ -254,7 +261,7 @@ const AddModal :  React.FC<{}> = () => {
       const handleChange = (seleccionado: any) => {
 
         guardarNameSet(seleccionado,saveObj);
-      swal.fire("calando");
+     
     }  
      
 
@@ -269,9 +276,9 @@ saveInfo(seleccionado,coordi?.coordi[0],coordi?.coordi[1],saveObj);
         const GuardarRegistro = (seleccionado: any) => {
 
 
-          console.log(saveObj);
+           
           saveGpac(saveObj)
-
+         close();
       
         };
 
@@ -378,6 +385,7 @@ saveInfo(seleccionado,coordi?.coordi[0],coordi?.coordi[1],saveObj);
     );
 
 
-}
+})
 
-export default AddModal;
+
+ 

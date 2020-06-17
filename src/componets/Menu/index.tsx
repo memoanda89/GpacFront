@@ -7,7 +7,7 @@ import { Grid, Button, Fab, ClickAwayListener, Theme, createStyles, makeStyles, 
 
 import AddIcon from '@material-ui/icons/Add';
 import AddModal from "../AddModal";
-
+import swal from 'sweetalert2';
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
@@ -63,7 +63,17 @@ const Menu: React.FC<{}> = (getfilters) => {
     setOpen(false);
   };
 
-
+  const close = async () => {
+    
+  
+    setOpen(false);
+    swal.fire(
+      'Good job!',
+      '',
+      'success'
+    )
+ 
+  };
    
   return (
     <Grid container spacing={3}>
@@ -95,7 +105,8 @@ const Menu: React.FC<{}> = (getfilters) => {
       >
         <Fade in={open}>
           <div className={classes.paper}>
-            <AddModal></AddModal>
+           
+            <AddModal close={close}></AddModal>
           </div>
         </Fade>
       </Modal>

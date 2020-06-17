@@ -1,13 +1,13 @@
 import create, { GetState, SetState } from "zustand"
-import { MyState, FiltersMap, viewport,GuardaGpac, zipState } from "./types";
+import { MyState, FiltersMap, viewport,GuardaGpac, zipState, NameSearch } from "./types";
 
 
 export default create((setState: SetState<MyState>, getState: GetState<MyState>): MyState => {
   
-  // const server = "http://localhost:8081/api/";
-  // const serverCatalog = "http://localhost:8081/api/getCatalogo/";
-  const server = "http://lavameappservicios.us-west-2.elasticbeanstalk.com/api/";
-  const serverCatalog = "http://lavameappservicios.us-west-2.elasticbeanstalk.com/api/getCatalogo/";
+    // const server = "http://localhost:8081/api/";
+    // const serverCatalog = "http://localhost:8081/api/getCatalogo/";
+   const server = "http://lavameappservicios.us-west-2.elasticbeanstalk.com/api/";
+    const serverCatalog = "http://lavameappservicios.us-west-2.elasticbeanstalk.com/api/getCatalogo/";
 
   const zipCodeApi = "https://public.opendatasoft.com/api/records/1.0/search/?dataset=us-zip-code-latitude-and-longitude&q=&rows=300&facet=state";
 
@@ -61,6 +61,10 @@ export default create((setState: SetState<MyState>, getState: GetState<MyState>)
       zip:"",
       latitud:0,
       longitud:0
+    },
+    searchName:{
+      name:"",
+      type:0
     },
     searchMap: undefined,
     activity: undefined,
@@ -125,6 +129,7 @@ export default create((setState: SetState<MyState>, getState: GetState<MyState>)
       setState({ isLoading: true });
       const resultGeneric = await fetch(serverCatalog + catalogo);
       const generic = await resultGeneric.json();
+      console.log(generic)
       setState({ generic, isLoading: false });
 
 
@@ -133,6 +138,7 @@ export default create((setState: SetState<MyState>, getState: GetState<MyState>)
       setState({ isLoading: true });
       const resultGeneric = await fetch(serverCatalog + catalogo);
       const specilty = await resultGeneric.json();
+      console.log(specilty)
       setState({ specilty, isLoading: false });
 
 
@@ -140,6 +146,7 @@ export default create((setState: SetState<MyState>, getState: GetState<MyState>)
       setState({ isLoading: true });
       const resultGeneric = await fetch(serverCatalog + catalogo);
       const functional = await resultGeneric.json();
+      console.log(functional)
       setState({ functional, isLoading: false });
 
 
@@ -147,6 +154,7 @@ export default create((setState: SetState<MyState>, getState: GetState<MyState>)
       setState({ isLoading: true });
       const resultGeneric = await fetch(serverCatalog + catalogo);
       const candidate = await resultGeneric.json();
+      console.log(candidate)
       setState({ candidate, isLoading: false });
 
 
@@ -154,6 +162,7 @@ export default create((setState: SetState<MyState>, getState: GetState<MyState>)
       setState({ isLoading: true });
       const resultGeneric = await fetch(serverCatalog + catalogo);
       const coach = await resultGeneric.json();
+      console.log(coach)
       setState({ coach, isLoading: false });
 
 
@@ -161,6 +170,7 @@ export default create((setState: SetState<MyState>, getState: GetState<MyState>)
       setState({ isLoading: true });
       const resultGeneric = await fetch(serverCatalog + catalogo);
       const recluiter = await resultGeneric.json();
+      console.log(recluiter)
       setState({ recluiter, isLoading: false });
 
 
@@ -168,6 +178,7 @@ export default create((setState: SetState<MyState>, getState: GetState<MyState>)
       setState({ isLoading: true });
       const resultGeneric = await fetch(serverCatalog + catalogo);
       const stated = await resultGeneric.json();
+      console.log(stated)
       setState({ stated, isLoading: false });
 
 
@@ -329,9 +340,29 @@ export default create((setState: SetState<MyState>, getState: GetState<MyState>)
     },setActivitySave:async(filter: GuardaGpac,zip: any) => {
       filter.activty=zip;
       setState({  isLoading: false,filter }); 
-    }
-
-
+    },setSearhcPameter:async(searchParam:NameSearch,name:any,type:any) => {
+      
+      searchParam.name=name;
+      searchParam.type=type;
+      const searchName=searchParam;
+      setState({  isLoading: false,searchName }); 
+    },setfilter:async()=>{
+       const filter={
+        name:"",
+        activty:0,
+        type:0,
+        coach:0,
+        recluter:0,
+        candidate:0,
+        functional:0,
+        specilty:0,
+        industry:0,
+        state:"",
+        zip:""
+      }
+      setState({  isLoading: false,filter }); 
+    },
   }
 })
 
+ 

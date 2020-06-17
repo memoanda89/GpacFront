@@ -13,7 +13,10 @@ export interface User {
     description: string;
    
   } 
-  
+  export interface  NameSearch{
+    name:string;
+    type:number;
+  }
 
 
   export interface Catalogo {
@@ -31,9 +34,20 @@ export interface User {
     name:string;
     zipCode:number;
     latitud:number;
-    longitud:number
+    longitud:number;
+    state:string;
     idState:number;
     IdActivity:number;
+    coach:string;
+    activity:string;
+    candidate:string;
+    functional:string;
+    industry:string;
+    recruiter:string;
+    specialty:string;
+    type:string;
+
+
   }
 
 export interface fieldsZipMap{
@@ -137,6 +151,7 @@ export interface zipProperties{
  
 }
   export interface MyState {
+    searchName:NameSearch;
     filter:FiltersMap;
     zipState:zipState;
     viewport:viewport;
@@ -182,6 +197,7 @@ export interface zipProperties{
     setCoach:(filter: FiltersMap,zip: any)=>void;
     setCandidate:(filter: FiltersMap,zip: any)=>void;
     setActivity:(filter: FiltersMap,zip: any)=>void;
+    setfilter:()=>void;
     setNameGuardar:(name:any,Gpac:GuardaGpac)=>void;
     setstateGuardar:(name:any,Gpac:GuardaGpac)=>void;
     setInfoGuardar:(zip:any,latitud:number|undefined,longitud:number|undefined,Gpac:GuardaGpac)=>void;
@@ -194,5 +210,6 @@ export interface zipProperties{
     setCoachSave:(filter: GuardaGpac,zip: any)=>void;
     setCandidateSave:(filter: GuardaGpac,zip: any)=>void;
     setActivitySave:(filter: GuardaGpac,zip: any)=>void;
+    setSearhcPameter:(searchParam:NameSearch,nombre:any,type:any)=>void;
     // setActivity:(seleccionado:number)=>void;
 } 

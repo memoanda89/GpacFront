@@ -107,20 +107,26 @@ createStyles({
         []
       );
      
-     const handleKeyPress = (event: { key: string; }) => {
-        if(event.key === 'Enter'){
-          // getMapFilters({
-            
-          // })
-        }
-      }
+    
       const arrayType = objStore(state => state.type);
       const getType = objStore(state => state.getType);
       const classes = useStyles();
       const getMapFilters=objStore(state=> state.getMapFilters);
       const theme = useTheme();
       const filters=objStore(state => state.filter);
- 
+      const nameValue= objStore(state => state.searchName);
+      const handleKeyPress = (event: { target: { value: any; }; key: string; }) => {
+   console.log(nameValue.name);
+        if(event.key === 'Enter'){
+          // getMapFilters({
+            alert("buscar")
+          // })
+        }
+      }
+      const handleChange = (seleccionado: any) => {
+        alert("nueva")
+          
+        }  
     return (
        
           
@@ -137,12 +143,15 @@ createStyles({
             </div>
             <InputBase className={classes.textSearch}
               placeholder="Search…"
-              onKeyPress={handleKeyPress} 
+              //value={nameValue.name}
+                
+             onKeyPress={e=>handleKeyPress} 
+             // onChange={e=> handleChange(e.target.value)}
               classes={{
                 root: classes.inputRoot,
                 input: classes.inputInput,
               }}
-              inputProps={{ 'aria-label': 'search' }}
+              
             />
  <Select className={classes.comboSearch}
           native

@@ -106,11 +106,11 @@ const MapCustom: React.FC<{}> = () => {
                 setSelectedPark(park);
               }}
             >
-            {park?.IdActivity===4? <Avatar className={classes.green}>
+            {park?.IdActivity===3? <Avatar className={classes.green}>
        
-      </Avatar> :   park?.IdActivity===3? <Avatar className={classes.red}>
+      </Avatar> :   park?.IdActivity===4?  <Avatar className={classes.yellow}> </Avatar>
         
-      </Avatar> :    <Avatar className={classes.yellow}> </Avatar>  }
+      :  <Avatar className={classes.red}></Avatar>    }
             </a>
           </Marker>
         )
@@ -127,14 +127,14 @@ const MapCustom: React.FC<{}> = () => {
 
               <div style={{ width: '320px' }}>
                 <Grid container spacing={1}>
-                  <Grid item xs={9}>
+                  <Grid item xs={8}>
                     <p style={{ fontWeight: 'bold' }}>{selectedPark.name}
                   <br />
-          <span style={{ fontWeight: 'lighter' }}>{selectedPark.id}</span>
+                 <span style={{ fontWeight: 'lighter' }}>{selectedPark.functional}</span>
                     </p>
                   </Grid>
-                  <Grid item xs={3}>
-                    <p> <a href='·/'>ALPHA</a></p>
+                  <Grid item xs={4}>
+                    <p> <a href='·/'>{selectedPark.type}</a></p>
                   </Grid>
                   <Grid item xs={2} >
 
@@ -142,9 +142,9 @@ const MapCustom: React.FC<{}> = () => {
 
                   </Grid>
                   <Grid item xs={10}>
-                    <p >Adyan Sosa
+                    <p >Recluter {selectedPark.recruiter}
                   <br />
-                      <span  >User Experience Designer</span>
+                     <span  >{selectedPark.state}</span>
                     </p>
                   </Grid>
                   <Grid item xs={5}>

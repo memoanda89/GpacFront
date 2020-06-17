@@ -14,9 +14,9 @@ const [objStore] = useMyStore;
 const InventoryFilters: React.FC<{}> = () => {
 const Search=objStore(state=>state.searchMap);
 const classes = style();
-const [search, setSearch] = useState<searchMap | undefined>({
-  activty:0,
-  type:0,
+const [geo, setlgeo] = useState({
+  lat:0,
+  lon:0,
  
 });
 
@@ -74,13 +74,19 @@ const infoSearch = {
   const setViewPort = objStore(state => state.setViewPort);
   const saveObj=objStore(state=> state.guardaGpac);
   const saveInfo = objStore(state => state.setInfoGuardar);
+
+  const getGpac = objStore(state => state.getGapMap);
+  const getZipcode = objStore(state => state.getZipCode);
   const isLoading = objStore(state => state.isLoading);
+
+  const setfilter= objStore(state => state.setfilter);
+ 
   useEffect(() => {
 
     (async function () {
       await getActivity();
       await getType();
-      await getZipcodeInit();
+        await getZipcodeInit();
       await getGeneric("industry");
       await getGenericSpecilty("specialty");
       await getFunctional("functional");
@@ -171,7 +177,7 @@ const infoSearch = {
         }
         return rObj
       });
-      return <CustomSelect  contenido={zipCode} catalogo={"Zipcode"} seleccionadoValor={setZipCode} />;
+      return <CustomSelect  value={filters.zip} contenido={zipCode} catalogo={"Zipcode"} seleccionadoValor={setZipCode} />;
     } else if (isLoading) {
       return "Cargando";
     }
@@ -225,39 +231,67 @@ const setIndustry = (seleccionado: number) => {
   Industry(filters,seleccionado);
  
 };
-
-
+const setNAme = (seleccionado: any) => {
+  Name(filters,seleccionado);
+ 
+};
+ 
   
   const handleOpen = (seleccionado: any) => {
     getMapFilters(filters)
+    console.log(geo);
+    if(geo.lat!=0){
+      setViewPort({
+        latitude: geo.lat,
+        longitude:geo.lon,
+        width:1030,
+        height:800,
+        zoom: 6
+       })
+
+    }
+    
+
   };
 
   const test = (seleccionado: string|unknown) => {
-    var coordi= stated.options.find(c=> c.value==seleccionado);
+  var coordi= stated.options.find(c=> c.value==seleccionado);
   
 saveInfo(seleccionado,coordi?.coordi[0],coordi?.coordi[1],saveObj);
   zipValue(filters,seleccionado)
-
-
+  setlgeo({
+      lat:coordi==undefined?0:coordi.coordi[0],
+      lon:coordi==undefined?0:coordi.coordi[1],
+  });
+ 
+ 
    
   };
     
-  const handleChange = (seleccionado: any) => {
+  const initialSearch = ( ) => {
+      getGpac();
+      getZipcode();
     setViewPort({
-latitude:saveObj.latitud,
-longitude:saveObj.longitud,
-zoom:8,
-width: 1030,
-height: 900
+    latitude: 40.5360,
+    longitude:-94.7522 ,
+    width:1030,
+    height:800,
+    zoom: 2
+   })
+      
+   setfilter();
+  };
 
-    })
-    Name(filters,seleccionado);
-  
-}  
- 
+  const initialcharge=()=>{
+    
+  }
 
   return (
     <div id="filters" style={{ borderLeft: "1px solid grey" }} >
+      <div id="button" style={{ textAlign:"right"}}>
+      <Button color="primary" onClick={initialSearch}>Reset All</Button>
+      </div>
+   
        {renderType()}
        <InputBase  className={classes.textSearchGeneric}
               placeholder="Search…"
@@ -270,7 +304,7 @@ height: 900
                 height: '40px'
       
               }}
-              onChange={e=> handleChange(e.target.value)}
+              onChange={e=> setNAme(e.target.value )}
               inputProps={{ 'aria-label': 'search' }}
             />
       {renderIndustry()}
@@ -304,6 +338,20 @@ height: 900
            
         </Select>
         </FormControl>
+        <InputBase  className={classes.textSearchGeneric}
+              placeholder="Radiuos"
+              style={{
+                width: "100%",
+                padding:'5px',
+                marginLeft:'3%',
+                marginBottom: "3%",
+                borderRadius: "30px",
+                height: '40px'
+      
+              }}
+         
+              inputProps={{ 'aria-label': 'search' }}
+            />
     
       <Button variant="contained" size="large" color="primary"    onClick={handleOpen} style={{
         width: '100%',
